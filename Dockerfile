@@ -1,26 +1,23 @@
 # Используем официальный образ Node.js в качестве базового
 FROM node:18-alpine
 
-# Устанавливаем pnpm
-RUN npm install -g pnpm
-
-# Устанавливаем рабочую директорию внутри контейнера
+# Устанавливаем рабочую директорию
 WORKDIR /app
 
-# Копируем файлы package.json и pnpm-lock.yaml для установки зависимостей
-COPY package.json pnpm-lock.yaml ./
+# Копируем package.json и package-lock.json
+COPY package*.json ./
 
 # Устанавливаем зависимости
-RUN pnpm install
+RUN npm install
 
 # Копируем остальные файлы проекта
 COPY . .
 
 # Собираем проект
-RUN pnpm build
+RUN npm run build
 
-# Указываем порт, который будет использоваться приложением
-EXPOSE 3000
+# Указываем команду по умолчанию для запуска контейнера
+CMD ["npm", "run", "preview"]
 
-# Команда для запуска приложения
-CMD ["pnpm", "dev"]
+# Указываем порт, который будет использоваться
+EXPOSE 4173
