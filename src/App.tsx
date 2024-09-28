@@ -36,7 +36,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Editor />} />
+        <Route path="/editor" element={<Editor />} />
       </Routes>
     </Router>
   );

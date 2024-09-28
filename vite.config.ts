@@ -4,6 +4,7 @@ import path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: '/video/', // Set the base path here
   plugins: [react()],
   resolve: {
     alias: {
