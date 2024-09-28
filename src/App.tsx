@@ -36,7 +36,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/editor" element={<Editor />} />
+        <Route path="/video/editor" element={<Editor />} />
       </Routes>
     </Router>
   );
