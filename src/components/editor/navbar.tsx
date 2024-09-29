@@ -31,7 +31,7 @@ export default function Navbar() {
       try {
         const videoId = 'your_video_id'; // Замените на ваш videoId
         const clipsNum = 'your_clips_num'; // Замените на ваш clipsNum
-        const response = await axios.get(`http://localhost:8000/api/meta`, {
+        const response = await axios.get(`http://195.242.25.2:8009/api/meta`, {
           params: { videoId, clipsNum },
         });
         setVideoTitle(response.data.title);
