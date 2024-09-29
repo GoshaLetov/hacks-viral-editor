@@ -43,28 +43,28 @@ export const Videos = () => {
 
   return (
     <div className="flex-1 flex flex-col">
-      <div className="text-md flex-none text-text-primary font-medium h-12  flex items-center px-4">
-        Videos
+      <div className="text-md flex-none text-text-primary font-medium h-12 flex items-center px-4">
+        Видео
       </div>
-      <div>
-          <Tabs defaultValue="projects" className="w-full">
-              <Button
-                onClick={handleUploadClick}
-                className="flex gap-2 w-full"
-                size="sm"
-                variant="secondary"
-              >
-                <UploadIcon size={16} /> Upload
-                <input
-                type="file"
-                ref={fileInputRef}
-                style={{ display: 'none' }}
-                onChange={handleFileChange}
-              />
-              </Button>
-            <TabsContent value="projects"></TabsContent>
-          </Tabs>
-        </div>
+      <div className="px-4"> {/* Added padding to the container */}
+        <Tabs defaultValue="projects" className="w-full">
+          <Button
+            onClick={handleUploadClick}
+            className="flex gap-2 w-full"
+            size="sm"
+            variant="secondary"
+          >
+            <UploadIcon size={16} /> Загрузить
+            <input
+              type="file"
+              ref={fileInputRef}
+              style={{ display: 'none' }}
+              onChange={handleFileChange}
+            />
+          </Button>
+          <TabsContent value="projects"></TabsContent>
+        </Tabs>
+      </div>
       <ScrollArea>
         <div className="px-4 masonry-sm">
           {VIDEOS.map((image, index) => {
@@ -72,7 +72,7 @@ export const Videos = () => {
               <div
                 onClick={() => handleAddVideo(image.src)}
                 key={index}
-                className="flex items-center justify-center w-full  bg-zinc-950 pb-2 overflow-hidden cursor-pointer"
+                className="flex items-center justify-center w-full bg-zinc-950 pb-2 overflow-hidden cursor-pointer"
               >
                 <img
                   src={image.preview}

@@ -86,7 +86,7 @@ export default function MenuList() {
       >
         <Icons.audio width={20} />
       </Button>
-      <Button
+      {/* <Button
         onClick={() => {
           setActiveMenuItem('shapes');
           setShowMenuItem(true);
@@ -125,7 +125,7 @@ export default function MenuList() {
             fill="currentColor"
           />
         </svg>
-      </Button>
+      </Button> */}
     </div>
   );
 }

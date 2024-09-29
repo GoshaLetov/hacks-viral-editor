@@ -124,7 +124,7 @@ export const Uploads = () => {
 
   const fetchVideo = async (videoId: string, clipNum: number) => {
     try {
-      const response = await axios.get(`http://195.242.25.2:8009/api/part`, {
+      const response = await axios.get(`http://localhost:8000/api/part`, { //195.242.25.2:8009
         params: {
           videoId,
           clipsNum: clipNum,
@@ -134,7 +134,11 @@ export const Uploads = () => {
       console.log('Fetch video response:', response); // Log the response to inspect its structure
       return response.data;
     } catch (error) {
-      console.error('Error fetching video:', error);
+      if (axios.isAxiosError(error) && error.response?.status === 404) {
+        console.error(`Video clip ${clipNum} not found for videoId: ${videoId}`);
+      } else {
+        console.error('Error fetching video:', error);
+      }
       return null;
     }
   };
@@ -178,32 +182,24 @@ export const Uploads = () => {
         <div>
           <Tabs defaultValue="projects" className="w-full" onValueChange={setActiveTab}>
             <TabsList className="grid w-full grid-cols-1">
-              <TabsTrigger value="projects">Project</TabsTrigger>
+              <TabsTrigger value="projects">Upload</TabsTrigger>
             </TabsList>
             <TabsContent value="projects">
               <div className="flex flex-col gap-4 mt-4">
-                {thumbnails.map((thumbnail, index) => (
-                  <div key={index} className="cursor-pointer" onClick={() => handleAddVideo(videoUrls[index])}>
-                    <img src={thumbnail} alt={`Video preview ${index + 1}`} className="w-full h-auto" />
-                  </div>
-                ))}
+                {thumbnails.length > 0 ? (
+                  thumbnails.map((thumbnail, index) => (
+                    <div key={index} className="cursor-pointer" onClick={() => handleAddVideo(videoUrls[index])}>
+                      <img src={thumbnail} alt={`Video preview ${index + 1}`} className="w-full h-auto" />
+                    </div>
+                  ))
+                ) : (
+                  <div className="text-center text-gray-500">No videos available</div>
+                )}
               </div>
             </TabsContent>
           </Tabs>
         </div>
       </ScrollArea>
-      <div className="fixed left-0 top-1/2 transform -translate-y-1/2">
-        <Button
-          onClick={() => {
-            setActiveTab('uploads');
-          }}
-          className="flex gap-2"
-          size="sm"
-          variant="secondary"
-        >
-          <UploadIcon size={16} /> Upload
-        </Button>
-      </div>
     </div>
   );
 };

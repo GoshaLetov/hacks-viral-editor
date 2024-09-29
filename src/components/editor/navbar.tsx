@@ -18,10 +18,31 @@ import { ChevronDown, Download } from 'lucide-react';
 import { Label } from '../ui/label';
 import { Progress } from '../ui/progress';
 import { download } from '@/utils/download';
+import axios from 'axios';
 
 const baseUrl = 'https://renderer.designcombo.dev';
 //  https://renderer.designcombo.dev/status/{id}
+
 export default function Navbar() {
+  const [videoTitle, setVideoTitle] = useState('Untitled video');
+
+  useEffect(() => {
+    const fetchVideoTitle = async () => {
+      try {
+        const videoId = 'your_video_id'; // Замените на ваш videoId
+        const clipsNum = 'your_clips_num'; // Замените на ваш clipsNum
+        const response = await axios.get(`http://localhost:8000/api/meta`, {
+          params: { videoId, clipsNum },
+        });
+        setVideoTitle(response.data.title);
+      } catch (error) {
+        console.error('Error fetching video title:', error);
+      }
+    };
+
+    fetchVideoTitle();
+  }, []);
+
   const handleUndo = () => {
     dispatcher.dispatch(HISTORY_UNDO);
   };
@@ -68,7 +89,7 @@ export default function Navbar() {
 
       <div className="pointer-events-auto  h-14 flex items-center gap-2 justify-center">
         <div className="bg-zinc-950 px-2.5 rounded-md h-12 gap-4 flex items-center">
-          <div className="font-medium text-sm px-1">Untitled video</div>
+          <div className="font-medium text-sm px-1">{videoTitle}</div>
           <ResizeVideo />
         </div>
       </div>
@@ -77,7 +98,7 @@ export default function Navbar() {
         <div className="flex items-center gap-2 bg-zinc-950 px-2.5 rounded-md h-12">
           <Button
             className="border border-white/10 flex gap-2"
-            onClick={() => openLink('https://discord.gg/jrZs3wZyM5')}
+            onClick={() => openLink('https://discord.com')}
             size="xs"
             variant="secondary"
           >
@@ -124,6 +145,11 @@ const DownloadPopover = () => {
   } = useEditorState();
 
   const handleExport = () => {
+    alert('Функционал скачивания пока недоступен.'); // Show alert to the user
+    return;
+
+    // The following code is commented out as the download functionality is not available
+    /*
     const payload = {
       trackItemIds,
       trackItemsMap,
@@ -155,6 +181,7 @@ const DownloadPopover = () => {
           isDownloading: true,
         });
       });
+    */
   };
 
   useEffect(() => {
@@ -292,7 +319,7 @@ const ResizeVideo = () => {
           size="xs"
           variant="secondary"
         >
-          Resize
+          Разрешение
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-60 z-[250]">
