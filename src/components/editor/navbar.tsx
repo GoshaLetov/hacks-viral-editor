@@ -38,7 +38,7 @@ export default function Navbar() {
   useEffect(() => {
     const fetchVideoTitle = async () => {
       try {
-        const response = await axios.get(`http://195.242.25.2:8009/api/meta`, {
+        const response = await axios.get(`http://89.110.109.100/api/meta`, {
           params: { videoId, clipsNum },
         });
         setVideoTitle(response.data.title);
